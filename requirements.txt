@@ -1,0 +1,12 @@
+torch
+torchvision
+diffusers
+transformers
+#xformers
+accelerate
+
+# # In your virtual environment
+# pip install accelerate --upgrade
+# pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu 
+#  # CPU-only version
+# pip install diffusers transformers safetensors

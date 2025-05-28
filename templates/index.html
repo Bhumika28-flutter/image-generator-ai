@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AI Image Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f4f4f4;
+        }
+        
+        h1 {
+            color: #333;
+        }
+        
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: auto;
+        }
+        
+        input,
+        select,
+        textarea,
+        button {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .gallery img {
+            max-width: 100%;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🧠 AI Name Art Generator</h1>
+    <form action="/generate" method="post">
+        <label>Prompt:</label>
+        <input type="text" name="prompt" required placeholder="e.g. Pushpa in golden fire style">
+
+        <label>Seed (optional):</label>
+        <input type="number" name="seed">
+
+        <label>Image Width:</label>
+        <input type="number" name="width" value="512">
+
+        <label>Image Height:</label>
+        <input type="number" name="height" value="512">
+
+        <label>Steps:</label>
+        <input type="number" name="steps" value="20">
+
+        <label>Guidance Scale:</label>
+        <input type="number" step="0.1" name="scale" value="7.5">
+
+        <label>Number of Images:</label>
+        <input type="number" name="num_images" value="1">
+
+        <button type="submit">Generate</button>
+    </form>
+
+    {% if images %}
+    <hr>
+    <h2>🎨 Generated Images:</h2>
+    <div class="gallery">
+        {% for img in images %}
+        <img src="{{ url_for('static', filename='images/' ~ img) }}" alt="Generated image"> {% endfor %}
+    </div>
+    {% endif %}
+</body>
+
+</html>
+
+
+
+
+
+<!-- //templates/index.html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Image Generator</title>
+</head>
+
+<body>
+    <h1>AI Image Generator</h1>
+    <input id="prompt" placeholder="Enter your prompt" size="40" />
+    <button onclick="generate()">Generate</button>
+    <div id="result"></div>
+
+    <div id="loading" style="display:none;">
+        <div class="spinner"></div>
+        <p>Generating "red bus"... (may take 20-30 seconds)</p>
+    </div>
+
+    <script>
+        async function generate() {
+            const prompt = document.getElementById("prompt").value;
+            if (!prompt) return;
+
+            const loading = document.getElementById("loading");
+            const result = document.getElementById("result");
+
+            loading.style.display = "block";
+            loading.querySelector("p").textContent = `Generating "${prompt}"...`;
+            result.innerHTML = "";
+
+            try {
+                const response = await fetch("/generate-image", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        prompt
+                    })
+                });
+
+                const data = await response.json();
+                if (data.imageUrl) {
+                    result.innerHTML = `<img src="${data.imageUrl}" width="512" alt="Generated image"/>`;
+                } else {
+                    result.textContent = "Error: " + (data.error || "Unknown error");
+                }
+            } catch (error) {
+                result.textContent = "Error: " + error.message;
+            } finally {
+                loading.style.display = "none";
+            }
+        }
+    </script>
+
+    <style>
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</body>
+
+</html> -->
